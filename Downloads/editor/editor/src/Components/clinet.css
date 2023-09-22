@@ -1,0 +1,32 @@
+.client {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #f5f5f5; /* Use a lighter background color */
+  margin-bottom: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Reduce shadow intensity */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.client:hover {
+  background-color: #e0e0e0; /* Darker background on hover */
+  transform: scale(1.02);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-right: 12px;
+  border: 2px solid #fff; /* Add a border to avatar with a white background */
+}
+
+.username {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
