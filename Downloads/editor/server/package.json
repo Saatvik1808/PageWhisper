@@ -4,8 +4,9 @@
   "description": "backend",
   "main": "index.js",
   "scripts": {
-    "server:dev": "nodemon server.js",
-    "server:pro": "node server.js",
+    "server": "nodemon server.js",
+    "start": "node server.js",
+    "build":"npm i",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
