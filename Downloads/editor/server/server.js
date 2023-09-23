@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const cors = require("cors");
-
 const http = require('http');
 const path = require('path');
 const { Server } = require('socket.io');
@@ -9,13 +8,15 @@ const ACTIONS = require('../editor/src/Actions');
 const axios = require('axios');
 const server = http.createServer(app);
 const io = new Server(server);
+const qs = require('qs');
 app.use(cors());
-
 app.use(express.json());
 
-app.use(express.static('build'));
-app.use(express.static(path.join(__dirname, '..', 'editor', 'build')));
+app.use(express.static(path.join(__dirname, 'build')));
+console.log('__dirname:', __dirname);
+console.log('Resolved path:', path.join(__dirname, 'build', 'index.html'));
 
+app.use(express.static(path.join(__dirname, 'build')));
 
 const userSocketMap = {};
 
@@ -69,40 +70,52 @@ io.on('connection', (socket) => {
 });
 
 // Add the /compile route handler
-
 app.post('/compile', async (req, res) => {
     // Getting the required data from the request
+    console.log('Received a compile request'); 
     let code = req.body.code;
     let language = req.body.language;
     let input = req.body.input;
 
     if (language === 'python') {
         language = 'py';
+    }  
+    if (language == 'c++') {
+        language = 'cpp';
     }
-
-    const options = {
-        method: 'POST',
-        url: 'https://easy-compiler-api.p.rapidapi.com/api/python',
+    if (language == 'java') {
+        language = 'java';
+    }
+    if (language == 'C') {
+        language = 'c';
+    }
+    // Prepare the data for the new API
+    const data = {
+        'code': code,
+        'language': language,
+        'input': input
+    };
+    
+    const config = {
+        method: 'post',
+        url: 'https://api.codex.jaagrav.in',
         headers: {
-            'content-type': 'application/json',
-            'X-RapidAPI-Key': '87ff673866msh03ca039cb0eb488p1bde1djsn918ababb1aff',
-            'X-RapidAPI-Host': 'easy-compiler-api.p.rapidapi.com',
+            'Content-Type': 'application/json'
         },
-        data: {
-            code: code,
-            input: input,
-        },
+        data: data
     };
 
     try {
-        const response = await axios.request(options);
-        res.send(response.data);
-        console.log(response.data);
+        const response = await axios.request(config);
+        res.send(response.data); // Send the entire API response
+        console.log('API Response:', response.data);
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error'); // You may customize the error response as needed
+        console.error(error.message);
+        res.status(500).send('Internal Server Error');
     }
 });
+
+
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));

@@ -3,6 +3,8 @@ import { v4 as uuidV4 } from 'uuid';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
+import backgroundVideo from '../background.mp4'; // Make sure to provide the correct path to your video file
+
 const Home = () => {
     const navigate = useNavigate();
 
@@ -37,6 +39,12 @@ const Home = () => {
 
     return (
         <div className='homePageWrapper'>
+            {/* Add the video background */}
+            <video autoPlay muted loop id="videoBackground" className="video-background">
+                <source src={backgroundVideo} type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+
             <div className='formWrapper'>
                 <img
                     className="homePageLogo"

@@ -4,9 +4,9 @@ import ACTIONS from '../Actions';
 import Client from '../Components/Client';
 import Editor from '../Components/Editor';
 import { initSocket } from '../socket';
-import spinner from '../spinner.gif';
-import Axios from 'axios';
-
+import axios from 'axios';
+import spinner from "../spinner3.svg"
+import Navbar from "../Components/Navbar.js"
 import "./Edi.css";
 import {
     useLocation,
@@ -22,11 +22,12 @@ const EditorPage = () => {
     const { roomId } = useParams();
     const reactNavigator = useNavigate();
     const [clients, setClients] = useState([]);
-    const [userCode, setUserCode] = useState(``);
-
+    const [userCode, setUserCode] = useState('');
     const [userInput, setUserInput] = useState('');
     const [userOutput, setUserOutput] = useState('');
     const [loading, setLoading] = useState(false);
+    const [selectedLanguage, setSelectedLanguage] = useState('c++');
+    const [selectedTheme, setSelectedTheme] = useState('vs-dark');
 
     useEffect(() => {
         const init = async () => {
@@ -93,22 +94,40 @@ const EditorPage = () => {
     }
 
     function compile() {
+        console.log('compile function called');
+    
         setLoading(true);
-        if (userCode === ``) {
-            return
+        if (userCode === '') {
+            return;
         }
- 
+    
         // Post request to compile endpoint
-        Axios.post(`http://localhost:5000/compile`, {
-            code: '',
-            language: 'python',
-            input: ""
-        }).then((res) => {
-            setUserOutput(res.data.output);
-        }).then(() => {
-            setLoading(false);
+        axios.post(`http://localhost:5000/compile`, {
+            code: userCode,
+            language: selectedLanguage, // Use selected language
+            input: userInput,
         })
+        .then((res) => {
+            if (res.data.output) {
+                // If there is an error, display the error message
+                setUserOutput(res.data.output);
+                console.log('Compilation Result:', res.data.output);
+               
+            } else {
+                // If there is no error, display the output
+                setUserOutput(`Compilation Error: ${res.data.error}`);
+                console.error('Compilation Error:', res.data.error);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            setUserOutput('Error occurred while compiling.');
+        })
+        .finally(() => {
+            setLoading(false);
+        });
     }
+    
 
     function leaveRoom() {
         reactNavigator('/');
@@ -116,34 +135,44 @@ const EditorPage = () => {
 
     // Function to clear user output
     function clearOutput() {
-        setUserOutput("");
+        setUserOutput('');
     }
 
     if (!location.state) {
         return <Navigate to="/" />;
     }
 
+    // Function to handle language selection
+    const handleLanguageChange = (e) => {
+        setSelectedLanguage(e.target.value);
+    };
+
+    // Function to handle theme selection
+    const handleThemeChange = (e) => {
+        setSelectedTheme(e.target.value);
+    };
+
     return (
         <div className="mainWrap">
+
             <div className="aside">
-                <div className="asideInner">
-                    <div className="logo">
-                        <img
-                            className="homePageLogo"
-                            src='/devsync-high-resolution-logo-white-on-transparent-background.png'
-                            alt='logo-dev'
-                        />
-                    </div>
-                    <h3 className='han' >Connected</h3>
-                    <div className="clientsList">
-                        {clients.map((client) => (
-                            <Client
-                                key={client.socketId}
-                                username={client.username}
-                            />
-                        ))}
-                    </div>
+                <div className="logo">
+                    <img
+                        className="homePageLogo"
+                        src='/devsync-high-resolution-logo-white-on-transparent-background.png'
+                        alt='logo-dev'
+                    />
                 </div>
+                <h3 className='han' >Connected</h3>
+                <div className="clientsList">
+                    {clients.map((client) => (
+                        <Client
+                            key={client.socketId}
+                            username={client.username}
+                        />
+                    ))}
+                </div>
+
                 <button className="btn copyBtn" onClick={copyRoomId}>
                     Copy ROOM ID
                 </button>
@@ -151,42 +180,56 @@ const EditorPage = () => {
                     Leave
                 </button>
             </div>
+
             <div className="editorWrap">
+                <div className="settings">
+                    <div className="dropdown">
+                        <label htmlFor="languageDropdown">Language: </label>
+                        <select
+                            id="languageDropdown"
+                            value={selectedLanguage}
+                            onChange={handleLanguageChange}
+                        >
+                            <option value="python">Python</option>
+                            <option value="c++">c++</option>
+                            <option value="java">java</option>
+                            {/* Add more language options as needed */}
+                        </select>
+                    </div>
+
+                </div>
                 <Editor
                     socketRef={socketRef}
                     roomId={roomId}
+                    selectedLanguage={selectedLanguage} // Pass selected language to the Editor component
                     onCodeChange={(code) => {
                         codeRef.current = code;
+                        setUserCode(code);
                     }}
-                    onChange={(value) => { setUserCode(value) }}
                 />
-                <button className="run-btn" onClick={() => compile()}>
-                        Run
-                    </button>
                 {/* Add input and output sections */}
-                <div className="right-container">
-                    <h4>Input:</h4>
-                    <div className="input-box">
-                        <textarea
-                            id="code-inp"
-                            onChange={(e) => setUserInput(e.target.value)}
-                            value={userInput} // Bind the value to state
-                        />
-                    </div>
-                    <h4>Output:</h4>
-                    {loading ? (
-                        <div className="spinner-box">
-                            <img src={spinner} alt="Loading..." />
-                        </div>
-                    ) : (
-                        <div className="output-box">
-                            <pre>{userOutput}</pre>
-                            <button onClick={clearOutput} className="clear-btn">
-                                Clear
-                            </button>
-                        </div>
-                    )}
+            </div>
+            <div className="right-container">
+                <h4>Input:</h4>
+                <div className="input-box">
+                    <textarea id="code-inp" onChange={(e) => setUserInput(e.target.value)}></textarea>
                 </div>
+                <h4>Output:</h4>
+                {loading ? (
+                    <div className="spinner-box">
+                        <img src={spinner} alt="Loading..." />
+                    </div>
+                ) : (
+                    <div className="output-box">
+                        <pre>{userOutput}</pre>
+                    </div>
+                )}
+                <button onClick={() => { clearOutput() }} className="clear-btn">
+                    Clear
+                </button>
+                <button className="run-btn" onClick={compile}>
+                    Run
+                </button>
             </div>
         </div>
     );
