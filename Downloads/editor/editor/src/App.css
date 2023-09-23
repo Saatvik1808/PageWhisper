@@ -31,7 +31,7 @@
 footer {
   position: fixed;
   bottom: 0;
-  background-color: rgba(40, 42, 54, 0.2) !important; /* Adjust the alpha value (0.7) as needed for transparency */
+  background-color: rgba(40, 42, 54, 0.2); /* Adjust the alpha value (0.7) as needed for transparency */
 
    z-index: 3;
   width: 100%;
@@ -215,7 +215,7 @@ h3 {
 }
 .cm-s-dracula.CodeMirror, .cm-s-dracula .CodeMirror-gutters {
   
-  background-color: #eaf1f3!important;
+  background-color: #041d21!important;
 }
 .CodeMirror-scroll{
   background-color: #041d21!important;}
