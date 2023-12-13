@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background: url("https://images.unsplash.com/photo-1528731708534-816fe59f90cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80") center/cover no-repeat;
+      font-family: Arial, sans-serif;
+    }
+    .banner {
+      background: url("https://images.unsplash.com/photo-1528731708534-816fe59f90cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80") center/cover no-repeat;
+      filter: brightness(100%);
+      height: 100vh;
+    }
+    .topnav {
+      background-color: rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 26px;
+      text-decoration: none;
+      font-size: 19px;
+      transition: 0.3s;
+    }
+    .topnav a:hover {
+      background-color: #ddd;
+      color: #333;
+    }
+    .topnav a.active {
+      background-color: #04AA6D;
+      color: white;
+    }
+    .topnav-right {
+      float: right;
+    }
+    .logo {
+      width: 150px;
+      cursor: pointer;
+    }
+    .about-content {
+      padding: 100px 0;
+    }
+    .about-content h1 {
+      font-size: 36px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .about-content p {
+      font-size: 18px;
+      color: #666;
+      line-height: 1.6;
+    }
+  </style>
+  <title>About Me</title>
+</head>
+<body class="banner">
+  <!-- Top Navbar -->
+  <div class="topnav">
+    <a href="/">Home</a>
+    <div class="topnav-right">
+      <a href="/contact">Contact Us</a>
+    </div>
+    <div class="topnav-right">
+      
+      <a href="/about" class="action">About</a>
+    </div>
+  </div
+
+  <!-- About Me Content -->
+  <div class="container-fluid about-content">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h1 class="text-center text-dark display-4 mb-4">About Me</h1>
+        <p>Hello, I'm Saatvik Shrivastava, a student at NIT Agartala. I have a passion for technology and machine learning. I've utilized this ML model to provide personalized book recommendations based on your searches. With a keen interest in AI, I'm dedicated to making the world of technology more accessible and useful for everyone.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and jQuery (if needed) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

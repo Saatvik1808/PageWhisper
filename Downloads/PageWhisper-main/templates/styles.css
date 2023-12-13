@@ -1,0 +1,118 @@
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.banner {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+    url("static/background.jpg");
+  filter: brightness(150%);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Navigation bar styles */
+.topnav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+  padding: 1rem;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
+
+.topnav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.topnav a:hover {
+  color: #f39c12;
+}
+
+.logo {
+  width: 100px;
+  cursor: pointer;
+}
+
+/* Form styles */
+.input-form {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.input-field {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+}
+
+.submit-btn {
+  background-color: #f39c12;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #e67e22;
+}
+
+/* Card styles */
+.card-column {
+  margin-top: 2rem;
+}
+
+.card {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-img-top {
+  max-width: 100%;
+  height: auto;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.card-text {
+  color: #888;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .logo {
+    width: 80px;
+  }
+}
